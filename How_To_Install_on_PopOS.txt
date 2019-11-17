@@ -1,0 +1,39 @@
+
+# Instruction for Installing and running YOLO on Pop OS! 19.04
+
+-- Run the following commands to setup the environments
+
+1. sudo apt update && sudo apt upgrade
+2. sudu apt install system76-cuda-latest
+3. sudo apt installl build-essential gcc gcc-7
+4. sudo apt install libopencv-dev
+5. sudo ln -s /usr/lib/cuda /usr/local/cuda
+6. sudo ln -s /usr/bin/gcc-7 /user/local/cuda/bin/gcc
+
+7. -- Copy following lines to ~/.bashrc files at the end
+
+	export CUDA_HOME=/usr/lib/cuda
+	export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/cuda/lib64:/usr/lib/cuda/extra>
+	export PATH=$PATH:$CUDA_HOME/bin
+
+
+-- Now it's time to compile the darknet open a new terminal and proceed
+
+1. cd darknet
+2. make
+
+
+ -- Run from webcam (requires compile with CUDA and OpenCV)
+	
+	./darknet detector demo cfg/coco.data cfg/yolov3.cfg yolov3.weights
+
+-- (Optional) If above command fails with `Error: Out of Memory`
+	
+	modify the file `cfg/yolov3.cfg` to
+
+	`
+	batch=1
+	subdivisions=1
+	width=416
+	height=416
+	`
